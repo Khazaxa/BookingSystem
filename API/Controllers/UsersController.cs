@@ -17,7 +17,7 @@ public class UsersController(IMediator _mediator) : ControllerBase
         => _mediator.Send(new UserCreateCommand(input), cancellationToken);
     
     [HttpGet, Route("")]
-    [AllowAnonymous]
+    [Authorize(Roles = "Admin")]
     public Task<IEnumerable<UserDto>> GetUsers(CancellationToken cancellationToken)
         => _mediator.Send(new UsersQuery(), cancellationToken);
 }

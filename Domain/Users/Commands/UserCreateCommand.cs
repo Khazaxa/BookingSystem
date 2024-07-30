@@ -1,5 +1,6 @@
+using System.Security.Cryptography;
+using System.Text;
 using Core.Cqrs;
-using Core.Helpers;
 using Domain.Users.Dto;
 using Domain.Users.Entities;
 using Domain.Users.Repositories;
@@ -19,10 +20,12 @@ internal class UserCreateCommandHandler(
         var input = command.Input;
         await _userService.ValidateIfEmailExistsAsync(input.Email, cancellationToken);
 
+        using var hmac = new HMACSHA512();
         var user = new User(
             input.UserName,
             input.Email,
-            input.Password,
+            hmac.ComputeHash(Encoding.UTF8.GetBytes(input.Password)),
+            hmac.Key,
             input.Role
         );
 

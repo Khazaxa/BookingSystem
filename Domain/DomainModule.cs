@@ -19,11 +19,10 @@ public class DomainModule(IConfigurationRoot _configuration) : Module
         
         builder.RegisterInstance(_configuration).As<IConfigurationRoot>();
         builder.RegisterModule<Users.UsersModule>();
+        builder.RegisterModule<Authentication.AuthenticationModule>();
         
         RegisterDatabaseProviders(builder);
         RegisterMediator(builder);
-        
-        //builder.RegisterType<UnitOfWork>().AsImplementedInterfaces();
     }
     
     public static void MigrateDatabase(IServiceScope scope)
