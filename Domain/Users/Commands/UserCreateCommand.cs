@@ -18,16 +18,11 @@ internal class UserCreateCommandHandler(
     {
         var input = command.Input;
         await _userService.ValidateIfEmailExistsAsync(input.Email, cancellationToken);
-        
-        var password = input.Password;
-        var passwordSalt = PasswordHelper.GenerateSalt();
-        var passwordHash = PasswordHelper.HashPassword(password);
 
         var user = new User(
-            input.Name,
+            input.UserName,
             input.Email,
-            passwordHash,
-            passwordSalt,
+            input.Password,
             input.Role
         );
 

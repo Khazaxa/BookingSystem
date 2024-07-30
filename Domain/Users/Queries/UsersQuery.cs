@@ -14,7 +14,7 @@ internal class UsersQueryHandler(IUserRepository _userRepository) : IQueryHandle
         var userDtos = users.Select(
             user => new UserDto(
                 user.Id, 
-                user.Name, 
+                user.UserName, 
                 user.Email, 
                 user.Role))
             .ToList();

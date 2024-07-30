@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using Core.Database;
+using Core.Helpers;
 using Domain.Users.Enums;
 using Microsoft.EntityFrameworkCore;
 
@@ -12,17 +13,17 @@ internal class User : EntityBase
 
     private User() {}
 
-    public User(string name, string email, byte[] passwordHash, byte[] passwordSalt, UserRole role)
+    public User(string userName, string email, string password, UserRole role)
     {
-        Name = name;
+        UserName = userName;
         Email = email;
-        PasswordHash = passwordHash;
-        PasswordSalt = passwordSalt;
+        PasswordHash = PasswordHelper.HashPassword(password);
+        PasswordSalt = PasswordHelper.GenerateSalt();
         Role = role;
     }
     
     [MaxLength(NameMaxLength)]
-    public string Name { get; private set; }
+    public string UserName { get; private set; }
     [MaxLength(EmailMaxLength)]
     public string Email { get; private set; }
     public byte[] PasswordHash { get; private set; } = null!;
