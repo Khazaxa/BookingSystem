@@ -13,5 +13,12 @@ public class LocationsController(IMediator _mediator) : ControllerBase
     [AllowAnonymous]
     public async Task<int> CreateLocation(LocationParams input, CancellationToken cancellationToken)
         => await _mediator.Send(new LocationCreateCommand(input), cancellationToken);
+    
+    [HttpDelete]
+    [Route("location/{id}")]
+    [AllowAnonymous]
+    public async Task<Unit> DeleteLocation(int id, CancellationToken cancellationToken)
+        => await _mediator.Send(new LocationDeleteCommand(id), cancellationToken);
+    
 
 }

@@ -5,6 +5,9 @@ namespace Domain.Locations.Repositories;
 
 internal class LocationRepository(BookingSystemDbContext _dbContext) : ILocationRepository
 {
+    public async Task<Location?> FindByIdAsync(int id, CancellationToken cancellationToken)
+        => await _dbContext.Locations.FirstOrDefaultAsync(l => l.Id == id, cancellationToken);
+    
     public async Task<Location?> FindByNameAsync(string name, CancellationToken cancellationToken)
         => await _dbContext.Locations.FirstOrDefaultAsync(l => l.Name == name, cancellationToken);
 
@@ -13,5 +16,15 @@ internal class LocationRepository(BookingSystemDbContext _dbContext) : ILocation
         await _dbContext.Locations.AddAsync(location, cancellationToken);
         await _dbContext.SaveChangesAsync(cancellationToken);
         return location;
+    }
+
+    public async Task DeleteLocationAsync(int id, CancellationToken cancellationToken)
+    {
+        var location = await FindByIdAsync(id, cancellationToken);
+        if (location is null)
+            return;
+       
+        _dbContext.Locations.Remove(location);
+        await _dbContext.SaveChangesAsync(cancellationToken);
     }
 }
