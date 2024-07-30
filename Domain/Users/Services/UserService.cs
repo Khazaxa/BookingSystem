@@ -17,18 +17,18 @@ internal class UserService(IUserRepository _userRepository, BookingSystemDbConte
             throw new DomainException("User with provided email already exists", (int)UserErrorCode.EmailInUse);
     }
     
-    public async Task CreateInitialUserAsync(string email, string password, CancellationToken cancellationToken)
+    public async Task CreateInitialUserAsync(string userName, string email, string password, UserRole role, CancellationToken cancellationToken)
     {
         if (await _dbContext.Users.AnyAsync(u => u.Email == email, cancellationToken))
             return;
 
         using var hmac = new HMACSHA512();
         var user = new User(
-            "user",
+            userName,
             email,
             hmac.ComputeHash(Encoding.UTF8.GetBytes(password)),
             hmac.Key,
-            UserRole.Admin
+            role
         );
 
         await _userRepository.AddAsync(user, cancellationToken);

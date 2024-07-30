@@ -3,6 +3,7 @@ using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using Core.Exceptions.Middleware;
 using Domain;
+using Domain.Users.Enums;
 using Domain.Users.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
@@ -97,7 +98,8 @@ public class Program
             var userService = services.GetRequiredService<IUserService>();
             
             DomainModule.MigrateDatabase(scope);
-            userService.CreateInitialUserAsync("user@example.com", "Password123$d", CancellationToken.None).GetAwaiter().GetResult();
+            userService.CreateInitialUserAsync("Admin", "user@example.com", "Password123$d", UserRole.Admin, CancellationToken.None).GetAwaiter().GetResult();
+            userService.CreateInitialUserAsync("Employee", "emp@example.com", "Password123$d", UserRole.Employee, CancellationToken.None).GetAwaiter().GetResult();
             DomainModule.MigrateDatabase(scope);
         }
 
