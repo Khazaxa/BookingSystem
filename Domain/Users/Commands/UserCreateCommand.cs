@@ -10,7 +10,6 @@ namespace Domain.Users.Commands;
 public record UserCreateCommand(UserParams Input) : ICommand<int>;
 
 internal class UserCreateCommandHandler(
-    BookingSystemDbContext _dbContext,
     IUserRepository _userRepository,
     IUserService _userService
 ) : ICommandHandler<UserCreateCommand, int>
@@ -18,7 +17,7 @@ internal class UserCreateCommandHandler(
     public async Task<int> Handle(UserCreateCommand command, CancellationToken cancellationToken)
     {
         var input = command.Input;
-        _userService.ValidateIfEmailExists(input.Email);
+        await _userService.ValidateIfEmailExistsAsync(input.Email, cancellationToken);
         
         var password = input.Password;
         var passwordSalt = PasswordHelper.GenerateSalt();
@@ -32,7 +31,7 @@ internal class UserCreateCommandHandler(
             input.Role
         );
 
-        var addedUser = _userRepository.Add(user, cancellationToken);
+        var addedUser = await _userRepository.AddAsync(user, cancellationToken);
 
         return addedUser.Id;
     }

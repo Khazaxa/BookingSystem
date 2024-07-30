@@ -10,8 +10,14 @@ internal class UsersQueryHandler(IUserRepository _userRepository) : IQueryHandle
 {
     public async Task<IEnumerable<UserDto>> Handle(UsersQuery request, CancellationToken cancellationToken)
     {
-        return null; //await _userRepository
-        // .GetAll()
-        // ), cancellationToken);
+        var users = await _userRepository.FindAsync(cancellationToken);
+        var userDtos = users.Select(
+            user => new UserDto(
+                user.Id, 
+                user.Name, 
+                user.Email, 
+                user.Role))
+            .ToList();
+        return userDtos;
     }
 }

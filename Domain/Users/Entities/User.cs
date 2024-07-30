@@ -28,11 +28,7 @@ internal class User : EntityBase
     public byte[] PasswordHash { get; private set; } = null!;
     public byte[] PasswordSalt { get; private set; } = null!;
     public UserRole Role { get; private set; }
-
-    public void UpdateRole(UserRole role)
-    {
-        Role = role;
-    }
+    
 
     public static void OnModelCreating(ModelBuilder builder)
     {

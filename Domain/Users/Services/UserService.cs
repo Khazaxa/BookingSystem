@@ -6,10 +6,10 @@ namespace Domain.Users.Services;
 
 internal class UserService(IUserRepository _userRepository) : IUserService
 {
-    public void ValidateIfEmailExists(string email)
+    public async Task ValidateIfEmailExistsAsync(string email, CancellationToken cancellationToken)
     {
-        var user = _userRepository.FindByEmail(email);
+        var user = await _userRepository.FindByEmailAsync(email, cancellationToken);
         if (user is not null)
-            throw new DomainException("Email already exists", (int)UserErrorCode.EmailInUse);
+            throw new DomainException("User with provided email already exists", (int)UserErrorCode.EmailInUse);
     }
 }
