@@ -1,3 +1,4 @@
+using Domain.Desks.Entities;
 using Domain.Locations.Entities;
 using Domain.Users.Entities;
 using Microsoft.EntityFrameworkCore;
@@ -12,11 +13,13 @@ internal class BookingSystemDbContext : DbContext
 
     public DbSet<User> Users { get; set; }
     public DbSet<Location> Locations { get; set; }
+    public DbSet<Desk> Desks { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
         User.OnModelCreating(modelBuilder);
         Location.OnModelCreating(modelBuilder);
+        Desk.OnModelCreating(modelBuilder);
     }
 }

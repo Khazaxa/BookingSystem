@@ -1,6 +1,7 @@
 using System.Text;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
+using Core.Configuration;
 using Core.Exceptions.Middleware;
 using Domain;
 using Domain.Users.Enums;
@@ -111,6 +112,8 @@ public class Program
         appBuilder.Host.ConfigureContainer<ContainerBuilder>(containerBuilder =>
         {
             containerBuilder.RegisterModule(new DomainModule(appBuilder.Configuration));
+            containerBuilder.RegisterInstance(new AppConfiguration(appBuilder.Configuration))
+                .As<IAppConfiguration>().SingleInstance();
         });
     }
 
