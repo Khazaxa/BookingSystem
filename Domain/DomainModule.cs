@@ -20,6 +20,7 @@ public class DomainModule(IConfigurationRoot _configuration) : Module
         builder.RegisterInstance(_configuration).As<IConfigurationRoot>();
         builder.RegisterModule<Users.UsersModule>();
         builder.RegisterModule<Authentication.AuthenticationModule>();
+        builder.RegisterModule<Locations.LocationsModule>();
         
         RegisterDatabaseProviders(builder);
         RegisterMediator(builder);

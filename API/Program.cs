@@ -5,6 +5,7 @@ using Core.Exceptions.Middleware;
 using Domain;
 using Domain.Users.Enums;
 using Domain.Users.Services;
+using Domain.Locations.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
@@ -94,12 +95,10 @@ public class Program
         
         using (var scope = app.Services.CreateScope())
         {
-            var services = scope.ServiceProvider;
-            var userService = services.GetRequiredService<IUserService>();
-            
             DomainModule.MigrateDatabase(scope);
-            userService.CreateInitialUserAsync("Admin", "user@example.com", "Password123$d", UserRole.Admin, CancellationToken.None).GetAwaiter().GetResult();
-            userService.CreateInitialUserAsync("Employee", "emp@example.com", "Password123$d", UserRole.Employee, CancellationToken.None).GetAwaiter().GetResult();
+            
+            SeedInitialData(scope);
+            
             DomainModule.MigrateDatabase(scope);
         }
 
@@ -113,5 +112,27 @@ public class Program
         {
             containerBuilder.RegisterModule(new DomainModule(appBuilder.Configuration));
         });
+    }
+
+    private static void SeedInitialData(IServiceScope scope)
+    {
+        var services = scope.ServiceProvider;
+        var userService = services.GetRequiredService<IUserService>();
+        var locationService = services.GetRequiredService<ILocationService>();
+        
+        userService.CreateInitialUserAsync("Admin", 
+            "user@example.com", 
+            "Password123$d", 
+            UserRole.Admin, 
+            CancellationToken.None).GetAwaiter().GetResult();
+        userService.CreateInitialUserAsync("Employee", 
+            "emp@example.com", 
+            "Password123$d",
+            UserRole.Employee, 
+            CancellationToken.None).GetAwaiter().GetResult();
+        
+        locationService.CreateInitialLocationAsync("Room 1", CancellationToken.None).GetAwaiter().GetResult();
+        locationService.CreateInitialLocationAsync("Room 2", CancellationToken.None).GetAwaiter().GetResult();
+        locationService.CreateInitialLocationAsync("Room 3", CancellationToken.None).GetAwaiter().GetResult();
     }
 }
