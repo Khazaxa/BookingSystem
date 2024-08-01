@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Domain.Migrations
 {
     [DbContext(typeof(BookingSystemDbContext))]
-    [Migration("20240730222150_Desks")]
+    [Migration("20240801145039_Desks")]
     partial class Desks
     {
         /// <inheritdoc />
@@ -33,25 +33,22 @@ namespace Domain.Migrations
 
                     MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime>("BookedAt")
+                    b.Property<DateTime?>("BookedAt")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<DateTime>("BookedUntil")
+                    b.Property<DateTime?>("BookedUntil")
                         .HasColumnType("datetime(6)");
 
                     b.Property<string>("Code")
                         .IsRequired()
-                        .HasColumnType("varchar(255)");
+                        .HasMaxLength(3)
+                        .HasColumnType("varchar(3)");
 
                     b.Property<bool>("IsBooked")
                         .HasColumnType("tinyint(1)");
 
                     b.Property<int>("LocationId")
                         .HasColumnType("int");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("longtext");
 
                     b.HasKey("Id");
 

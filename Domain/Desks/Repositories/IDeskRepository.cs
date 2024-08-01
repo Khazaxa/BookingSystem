@@ -1,6 +1,9 @@
+using Domain.Desks.Entities;
+
 namespace Domain.Desks.Repositories;
 
-public interface IDeskRepository
+internal interface IDeskRepository
 {
-    
+    Task<Desk> AddAsync(Desk desk, CancellationToken cancellationToken);
+    Task<Desk?> GetLastDeskAsync(CancellationToken cancellationToken);
 }

@@ -29,13 +29,11 @@ namespace Domain.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    Name = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    Code = table.Column<string>(type: "varchar(255)", nullable: false)
+                    Code = table.Column<string>(type: "varchar(3)", maxLength: 3, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     IsBooked = table.Column<bool>(type: "tinyint(1)", nullable: false),
-                    BookedAt = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    BookedUntil = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    BookedAt = table.Column<DateTime>(type: "datetime(6)", nullable: true),
+                    BookedUntil = table.Column<DateTime>(type: "datetime(6)", nullable: true),
                     LocationId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
