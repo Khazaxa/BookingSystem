@@ -1,4 +1,6 @@
+using Core.Exceptions;
 using Domain.Desks.Entities;
+using Domain.Desks.Enums;
 using Microsoft.EntityFrameworkCore;
 
 namespace Domain.Desks.Repositories;
@@ -22,4 +24,12 @@ internal class DeskRepository(BookingSystemDbContext _dbContext) : IDeskReposito
     public async Task<Desk?> FindByIdAsync(int id, CancellationToken cancellationToken)
         => await _dbContext.Desks.FirstOrDefaultAsync(l => l.Id == id, cancellationToken);
 
+    public async Task DeleteDeskAsync(int id, CancellationToken cancellationToken)
+    {
+        var desk = await FindByIdAsync(id, cancellationToken) 
+                   ?? throw new DomainException("Desk not found", (int)DeskErrorCode.NotFound);
+    
+        _dbContext.Desks.Remove(desk);
+        await _dbContext.SaveChangesAsync(cancellationToken);
+    }
 }

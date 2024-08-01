@@ -18,4 +18,8 @@ public class DesksController(IMediator _mediator) : ControllerBase
     public Task<Unit> ChangeDeskStatus(int id, CancellationToken cancellationToken)
         => _mediator.Send(new DeskChangeStatusCommand(id), cancellationToken);
     
+    [HttpDelete]
+    [Route("desk/{id}")]
+    public Task<Unit> DeleteDesk(int id, CancellationToken cancellationToken)
+        => _mediator.Send(new DeskDeleteCommand(id), cancellationToken);
 }
