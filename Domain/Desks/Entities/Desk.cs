@@ -26,6 +26,8 @@ internal class Desk
     public DateTime? BookedUntil { get; private set; }
     public int LocationId { get; private set; }
     public Location Location { get; private set; }
+    public int? UserId { get; private set; }
+    public User? User { get; private set; }
     
     public void ChangeStatus()
     {
@@ -56,5 +58,10 @@ internal class Desk
             .WithMany(l => l.Desks)
             .HasForeignKey(d => d.LocationId)
             .OnDelete(DeleteBehavior.Cascade);
+        builder.Entity<Desk>()
+            .HasOne(d => d.User)
+            .WithOne(u => u.Desk)
+            .HasForeignKey<User>(u => u.DeskId)
+            .OnDelete(DeleteBehavior.SetNull);
     }
 }

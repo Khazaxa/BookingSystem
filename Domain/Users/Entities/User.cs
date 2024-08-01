@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using Core.Database;
+using Domain.Desks.Entities;
 using Domain.Users.Enums;
 using Microsoft.EntityFrameworkCore;
 
@@ -28,10 +29,17 @@ internal class User : EntityBase
     public byte[] PasswordHash { get; private set; } = null!;
     public byte[] PasswordSalt { get; private set; } = null!;
     public UserRole Role { get; private set; }
+    public int? DeskId { get; private set; }
+    public Desk? Desk { get; private set; }
     
 
     public static void OnModelCreating(ModelBuilder builder)
     {
         builder.Entity<User>().HasIndex(x => x.Email).IsUnique();
+        builder.Entity<User>()
+            .HasOne(u => u.Desk)
+            .WithOne(d => d.User)
+            .HasForeignKey<User>(u => u.DeskId)
+            .OnDelete(DeleteBehavior.SetNull);
     }
 }

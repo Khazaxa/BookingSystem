@@ -1,5 +1,6 @@
 using System.Reflection;
 using Autofac;
+using Domain.Authentication.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -16,13 +17,15 @@ public class DomainModule(IConfigurationRoot _configuration) : Module
     protected override void Load(ContainerBuilder builder)
     {
         base.Load(builder);
-        
+    
         builder.RegisterInstance(_configuration).As<IConfigurationRoot>();
         builder.RegisterModule<Users.UsersModule>();
         builder.RegisterModule<Authentication.AuthenticationModule>();
         builder.RegisterModule<Locations.LocationsModule>();
         builder.RegisterModule<Desks.DesksModule>();
-        
+    
+        builder.RegisterType<UserContextService>().As<IUserContextService>().InstancePerLifetimeScope();
+    
         RegisterDatabaseProviders(builder);
         RegisterMediator(builder);
     }
