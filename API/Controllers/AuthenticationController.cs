@@ -7,8 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 namespace API.Controllers;
 
 [ApiController]
-[AllowAnonymous]
 [Route("auth")]
+[AllowAnonymous]
 public class AuthenticationController(IMediator _mediator) : ControllerBase
 {
     [HttpPost, Route("login")]

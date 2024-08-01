@@ -38,6 +38,13 @@ internal class Desk
         BookedUntil = bookedUntil;
     }
     
+    public void Unbook()
+    {
+        IsBooked = false;
+        BookedAt = null;
+        BookedUntil = null;
+    }
+    
     public static void OnModelCreating(ModelBuilder builder)
     {
         builder.Entity<Desk>().HasIndex(x => x.Code).IsUnique();

@@ -22,4 +22,14 @@ public class DesksController(IMediator _mediator) : ControllerBase
     [Route("desk/{id}")]
     public Task<Unit> DeleteDesk(int id, CancellationToken cancellationToken)
         => _mediator.Send(new DeskDeleteCommand(id), cancellationToken);
+    
+    [HttpPut]
+    [Route("desk/{id}/book")]
+    public Task<Unit> BookDesk(int id, int days, CancellationToken cancellationToken)
+        => _mediator.Send(new DeskBookCommand(id, days), cancellationToken);
+    
+    [HttpPut]
+    [Route("desk/{id}/unbook")]
+    public Task<Unit> UnbookDesk(int id, CancellationToken cancellationToken)
+        => _mediator.Send(new DeskUnbookCommand(id), cancellationToken);
 }
