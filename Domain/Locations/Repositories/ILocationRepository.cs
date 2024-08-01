@@ -9,4 +9,5 @@ internal interface ILocationRepository
     Task<Location> AddAsync(Location location, CancellationToken cancellationToken);
     Task DeleteLocationAsync(int id, CancellationToken cancellationToken);
     Task<bool> IsLocationContainsDeskAsync(int id, CancellationToken cancellationToken);
+    IQueryable<Location> Query();
 }

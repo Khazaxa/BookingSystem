@@ -26,8 +26,6 @@ internal class Desk
     public DateTime? BookedUntil { get; private set; }
     public int LocationId { get; private set; }
     public Location Location { get; private set; }
-    public int UserId { get; private set; }
-    public User User { get; private set; }
     
     public void ChangeStatus()
     {
@@ -37,6 +35,7 @@ internal class Desk
     public void Book(DateTime bookedAt, DateTime bookedUntil)
     {
         IsBooked = true;
+        IsAvailable = false;
         BookedAt = bookedAt;
         BookedUntil = bookedUntil;
     }
@@ -44,6 +43,7 @@ internal class Desk
     public void Unbook()
     {
         IsBooked = false;
+        IsAvailable = true;
         BookedAt = null;
         BookedUntil = null;
     }
@@ -51,5 +51,10 @@ internal class Desk
     public static void OnModelCreating(ModelBuilder builder)
     {
         builder.Entity<Desk>().HasIndex(x => x.Code).IsUnique();
+        builder.Entity<Desk>()
+            .HasOne(d => d.Location)
+            .WithMany(l => l.Desks)
+            .HasForeignKey(d => d.LocationId)
+            .OnDelete(DeleteBehavior.Cascade);
     }
 }

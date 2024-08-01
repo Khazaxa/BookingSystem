@@ -24,5 +24,9 @@ internal class Location
     public static void OnModelCreating(ModelBuilder builder)
     {
         builder.Entity<Location>().HasIndex(x => x.Name).IsUnique();
+        builder.Entity<Location>()
+            .HasMany(l => l.Desks)
+            .WithOne()
+            .HasForeignKey(d => d.LocationId);
     }
 }

@@ -36,4 +36,7 @@ internal class LocationRepository(BookingSystemDbContext _dbContext) : ILocation
         return await _dbContext.Locations
             .AnyAsync(l => l.Id == id && l.Desks.Any(), cancellationToken);
     }
+    
+    public IQueryable<Location> Query()
+        => _dbContext.Locations.AsQueryable();
 }

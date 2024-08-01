@@ -1,5 +1,6 @@
 using Domain.Locations.Commands;
 using Domain.Locations.Dto;
+using Domain.Locations.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -20,5 +21,9 @@ public class LocationsController(IMediator _mediator) : ControllerBase
     public async Task<Unit> DeleteLocation(int id, CancellationToken cancellationToken)
         => await _mediator.Send(new LocationDeleteCommand(id), cancellationToken);
     
-
+    [HttpGet]
+    [Route("location/{id}")]
+    [AllowAnonymous]
+    public async Task<LocationDto?> GetLocationDetails(int id, CancellationToken cancellationToken)
+        => await _mediator.Send(new LocationGetDetailsQuery(id), cancellationToken);
 }

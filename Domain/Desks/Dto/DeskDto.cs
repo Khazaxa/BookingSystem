@@ -4,8 +4,16 @@ namespace Domain.Desks.Dto;
 
 public class DeskDto
 {
-    [Required]
-    public string Name { get; set; }
+    public DeskDto(int id, string code, bool isBooked, DateTime? bookedAt, DateTime? bookedUntil)
+    {
+        Id = id;
+        Code = code;
+        IsBooked = isBooked;
+        BookedAt = bookedAt;
+        BookedUntil = bookedUntil;
+    } 
+        
+    public int Id { get; set; }
     [Required]
     public string Code { get; set; }
     [Required]
