@@ -41,6 +41,9 @@ namespace Domain.Migrations
                         .HasMaxLength(3)
                         .HasColumnType("varchar(3)");
 
+                    b.Property<bool>("IsAvailable")
+                        .HasColumnType("tinyint(1)");
+
                     b.Property<bool>("IsBooked")
                         .HasColumnType("tinyint(1)");
 

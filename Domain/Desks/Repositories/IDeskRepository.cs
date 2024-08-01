@@ -6,4 +6,5 @@ internal interface IDeskRepository
 {
     Task<Desk> AddAsync(Desk desk, CancellationToken cancellationToken);
     Task<Desk?> GetLastDeskAsync(CancellationToken cancellationToken);
+    Task<Desk?> FindByIdAsync(int id, CancellationToken cancellationToken);
 }

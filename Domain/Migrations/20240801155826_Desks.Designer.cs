@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Domain.Migrations
 {
     [DbContext(typeof(BookingSystemDbContext))]
-    [Migration("20240801145039_Desks")]
+    [Migration("20240801155826_Desks")]
     partial class Desks
     {
         /// <inheritdoc />
@@ -43,6 +43,9 @@ namespace Domain.Migrations
                         .IsRequired()
                         .HasMaxLength(3)
                         .HasColumnType("varchar(3)");
+
+                    b.Property<bool>("IsAvailable")
+                        .HasColumnType("tinyint(1)");
 
                     b.Property<bool>("IsBooked")
                         .HasColumnType("tinyint(1)");

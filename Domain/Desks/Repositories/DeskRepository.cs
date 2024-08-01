@@ -18,4 +18,8 @@ internal class DeskRepository(BookingSystemDbContext _dbContext) : IDeskReposito
             .OrderByDescending(d => d.Code)
             .FirstOrDefaultAsync(cancellationToken);
     }
+
+    public async Task<Desk?> FindByIdAsync(int id, CancellationToken cancellationToken)
+        => await _dbContext.Desks.FirstOrDefaultAsync(l => l.Id == id, cancellationToken);
+
 }

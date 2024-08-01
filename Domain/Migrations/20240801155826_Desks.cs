@@ -31,6 +31,7 @@ namespace Domain.Migrations
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     Code = table.Column<string>(type: "varchar(3)", maxLength: 3, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
+                    IsAvailable = table.Column<bool>(type: "tinyint(1)", nullable: false),
                     IsBooked = table.Column<bool>(type: "tinyint(1)", nullable: false),
                     BookedAt = table.Column<DateTime>(type: "datetime(6)", nullable: true),
                     BookedUntil = table.Column<DateTime>(type: "datetime(6)", nullable: true),

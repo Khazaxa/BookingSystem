@@ -19,11 +19,17 @@ internal class Desk
     public int Id { get; private set; }
     [MaxLength(CodeLength)]
     public string Code { get; private set; }
+    public bool IsAvailable { get; private set; }
     public bool IsBooked { get; private set; }
     public DateTime? BookedAt { get; private set; }
     public DateTime? BookedUntil { get; private set; }
     public int LocationId { get; private set; }
     public Location Location { get; private set; }
+    
+    public void ChangeStatus()
+    {
+        IsAvailable = !IsAvailable;
+    }
     
     public void Book(DateTime bookedAt, DateTime bookedUntil)
     {
