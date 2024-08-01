@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using Domain.Locations.Entities;
+using Domain.Users.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace Domain.Desks.Entities;
@@ -25,6 +26,8 @@ internal class Desk
     public DateTime? BookedUntil { get; private set; }
     public int LocationId { get; private set; }
     public Location Location { get; private set; }
+    public int UserId { get; private set; }
+    public User User { get; private set; }
     
     public void ChangeStatus()
     {

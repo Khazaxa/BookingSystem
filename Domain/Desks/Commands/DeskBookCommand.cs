@@ -12,7 +12,8 @@ public record DeskBookCommand(int Id, int Days) : ICommand<Unit>;
 internal class DeskBookCommandHandler(
     IDeskRepository _deskRepository, 
     BookingSystemDbContext _dbContext, 
-    IAppConfiguration _configuration) : ICommandHandler<DeskBookCommand, Unit>
+    IAppConfiguration _configuration
+    ) : ICommandHandler<DeskBookCommand, Unit>
 {
     public async Task<Unit> Handle(DeskBookCommand command, CancellationToken cancellationToken)
     {
