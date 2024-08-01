@@ -6,5 +6,6 @@ public enum DeskErrorCode
     NotFound = 2,
     DeskIsBooked = 3,
     ReservationDaysLimitExceeded = 4,
-    DeskIsNotBooked = 5
+    DeskIsNotBooked = 5,
+    DeskIsNotAvailable = 6
 }

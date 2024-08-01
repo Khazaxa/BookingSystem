@@ -21,7 +21,9 @@ internal class DeskBookCommandHandler(
         
         var desk = await _deskRepository.FindByIdAsync(command.Id, cancellationToken)
             ?? throw new DomainException("Desk not found", (int)DeskErrorCode.NotFound);
-        
+
+        if (!desk.IsAvailable)
+            throw new DomainException("Desk is not available", (int)DeskErrorCode.DeskIsNotAvailable);
         if (desk.IsBooked)
             throw new DomainException("Desk is already booked", (int)DeskErrorCode.DeskIsBooked);
         if (command.Days > maxDays)
