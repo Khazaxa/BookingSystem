@@ -15,7 +15,9 @@ internal class LocationDeleteCommandHandler(ILocationRepository _locationReposit
         var location = await _locationRepository.FindByIdAsync(command.Id, cancellationToken);
         if (location is null)
             throw new DomainException("Location not found", (int)LocationErrorCode.NotFound);
-        
+        if (await _locationRepository.IsLocationContainsDeskAsync(command.Id, cancellationToken))
+            throw new DomainException("Location contains desks", (int)LocationErrorCode.ContainsDesks);
+
         await _locationRepository.DeleteLocationAsync(command.Id, cancellationToken);
         return Unit.Value;
     }

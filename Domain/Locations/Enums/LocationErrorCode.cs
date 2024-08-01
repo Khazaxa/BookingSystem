@@ -3,5 +3,6 @@ namespace Domain.Locations.Enums;
 public enum LocationErrorCode
 {
     NameInUse = 1,
-    NotFound = 2
+    NotFound = 2,
+    ContainsDesks = 3
 }

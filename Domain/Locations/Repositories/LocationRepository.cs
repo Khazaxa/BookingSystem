@@ -5,6 +5,9 @@ namespace Domain.Locations.Repositories;
 
 internal class LocationRepository(BookingSystemDbContext _dbContext) : ILocationRepository
 {
+    public Task<Location?> FindById(int id)
+        => Task.FromResult(_dbContext.Locations.FirstOrDefault(l => l.Id == id));
+    
     public async Task<Location?> FindByIdAsync(int id, CancellationToken cancellationToken)
         => await _dbContext.Locations.FirstOrDefaultAsync(l => l.Id == id, cancellationToken);
     
@@ -26,5 +29,11 @@ internal class LocationRepository(BookingSystemDbContext _dbContext) : ILocation
        
         _dbContext.Locations.Remove(location);
         await _dbContext.SaveChangesAsync(cancellationToken);
+    }
+
+    public async Task<bool> IsLocationContainsDeskAsync(int id, CancellationToken cancellationToken)
+    {
+        return await _dbContext.Locations
+            .AnyAsync(l => l.Id == id && l.Desks.Any(), cancellationToken);
     }
 }
