@@ -8,13 +8,13 @@ internal class Location
 {
     private const int NameMaxLength = 8;
     
-    
     private Location() {}
     
     public Location(string name)
     {
         Name = name;
     }
+    
     
     public int Id { get; private set; }
     [MaxLength(NameMaxLength)]

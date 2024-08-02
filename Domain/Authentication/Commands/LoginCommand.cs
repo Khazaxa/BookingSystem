@@ -14,7 +14,6 @@ internal class LoginCommandHandler(
 	IAuthenticationService _authService
 	) : ICommandHandler<LoginCommand, LoginResponseDto>
 {
-
 	public async Task<LoginResponseDto> Handle(LoginCommand request, CancellationToken cancellationToken)
 	{
 		var user = (await _userRepository.FindByEmailAsync(request.Input.Email, cancellationToken))

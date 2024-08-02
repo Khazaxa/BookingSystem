@@ -12,6 +12,7 @@ public class UserDto
         Role = role;
     }
     
+    
     public int Id { get; }
     public string Name { get; }
     public string Email { get; }

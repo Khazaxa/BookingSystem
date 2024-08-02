@@ -9,6 +9,5 @@ public class DesksModule : Module
         base.Load(builder);
     
         builder.RegisterType<Repositories.DeskRepository>().AsImplementedInterfaces();
-        builder.RegisterType<Services.DeskService>().AsImplementedInterfaces();
     }
 }

@@ -8,17 +8,17 @@ namespace Domain.Locations.Commands;
 
 public record LocationDeleteCommand(int Id) : ICommand<Unit>;
 
-internal class LocationDeleteCommandHandler(ILocationRepository _locationRepository) : IRequestHandler<LocationDeleteCommand, Unit>
+internal class LocationDeleteCommandHandler(
+    ILocationRepository _locationRepository) : IRequestHandler<LocationDeleteCommand, Unit>
 {
     public async Task<Unit> Handle(LocationDeleteCommand command, CancellationToken cancellationToken)
     {
-        var location = await _locationRepository.FindByIdAsync(command.Id, cancellationToken);
-        if (location is null)
+        var location = await _locationRepository.FindByIdAsync(command.Id, cancellationToken)??
             throw new DomainException("Location not found", (int)LocationErrorCode.NotFound);
         if (await _locationRepository.IsLocationContainsDeskAsync(command.Id, cancellationToken))
             throw new DomainException("Location contains desks", (int)LocationErrorCode.ContainsDesks);
 
-        await _locationRepository.DeleteLocationAsync(command.Id, cancellationToken);
+        await _locationRepository.DeleteLocationAsync(location.Id, cancellationToken);
         return Unit.Value;
     }
 }

@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 
+namespace API.Controllers;
+
 public abstract class BaseController : ControllerBase
 {
     private readonly ILogger<BaseController> _logger;

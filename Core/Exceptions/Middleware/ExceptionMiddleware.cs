@@ -3,15 +3,8 @@ using System.Text.Json;
 
 namespace Core.Exceptions.Middleware;
 
-public class ExceptionMiddleware
+public class ExceptionMiddleware(RequestDelegate _next)
 {
-    private readonly RequestDelegate _next;
-
-    public ExceptionMiddleware(RequestDelegate next)
-    {
-        _next = next;
-    }
-
     public async Task InvokeAsync(HttpContext httpContext)
     {
         try

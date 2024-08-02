@@ -17,6 +17,7 @@ internal class Desk
         LocationId = locationId;
     }
     
+    
     public int Id { get; private set; }
     [MaxLength(CodeLength)]
     public string Code { get; private set; }

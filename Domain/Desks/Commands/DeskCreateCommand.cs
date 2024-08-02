@@ -7,7 +7,6 @@ using Domain.Desks.Repositories;
 using Domain.Locations.Enums;
 using Domain.Locations.Repositories;
 
-
 namespace Domain.Desks.Commands;
 
 public record DeskCreateCommand(DeskParams Input) : ICommand<int>;

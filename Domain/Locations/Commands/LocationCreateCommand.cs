@@ -8,7 +8,9 @@ namespace Domain.Locations.Commands;
 
 public record LocationCreateCommand(LocationParams Input) : ICommand<int>;
 
-internal class LocationCreateCommandHandler(ILocationService _locationService, ILocationRepository _locationRepository) : ICommandHandler<LocationCreateCommand, int>
+internal class LocationCreateCommandHandler(
+    ILocationService _locationService, 
+    ILocationRepository _locationRepository) : ICommandHandler<LocationCreateCommand, int>
 {
     public async Task<int> Handle(LocationCreateCommand command, CancellationToken cancellationToken)
     {
