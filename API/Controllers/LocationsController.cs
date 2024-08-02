@@ -11,19 +11,19 @@ namespace API.Controllers;
 public class LocationsController(IMediator _mediator) : ControllerBase
 {
     [HttpPost, Route("location")]
-    [AllowAnonymous]
+    [Authorize(Roles = "Admin")]
     public async Task<int> CreateLocation(LocationParams input, CancellationToken cancellationToken)
         => await _mediator.Send(new LocationCreateCommand(input), cancellationToken);
     
     [HttpDelete]
     [Route("location/{id}")]
-    [AllowAnonymous]
+    [Authorize(Roles = "Admin")]
     public async Task<Unit> DeleteLocation(int id, CancellationToken cancellationToken)
         => await _mediator.Send(new LocationDeleteCommand(id), cancellationToken);
     
     [HttpGet]
     [Route("location/{id}")]
-    [AllowAnonymous]
+    [Authorize(Roles = "Admin" + "," + "Employee")]
     public async Task<LocationDto?> GetLocationDetails(int id, CancellationToken cancellationToken)
         => await _mediator.Send(new LocationGetDetailsQuery(id), cancellationToken);
 }

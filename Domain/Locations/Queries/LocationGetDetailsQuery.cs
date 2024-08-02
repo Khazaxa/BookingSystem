@@ -31,6 +31,7 @@ internal class LocationGetDetailsQueryHandler(
             location.Desks?.Select(d => new DeskDto(
                 d.Id, 
                 d.Code, 
+                d.IsAvailable,
                 d.IsBooked, 
                 d.BookedAt, 
                 d.BookedUntil, 
