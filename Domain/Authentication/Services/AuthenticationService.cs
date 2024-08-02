@@ -8,16 +8,9 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace Domain.Authentication.Services;
 
-public class AuthenticationService : IAuthenticationService
+public class AuthenticationService(IConfiguration _configuration) : IAuthenticationService
 {
-    private readonly IConfiguration _configuration;
-
-    public AuthenticationService(IConfiguration configuration)
-    {
-        _configuration = configuration;
-    }
-
-    public string GenerateToken(string userName, UserRole role)
+    public string GenerateToken(string userName, UserRole role, int userId)
     {
         var jwtKey = _configuration["App:Jwt:Key"];
         if (string.IsNullOrEmpty(jwtKey))
@@ -31,7 +24,9 @@ public class AuthenticationService : IAuthenticationService
         var claims = new[]
         {
             new Claim(JwtRegisteredClaimNames.Sub, userName),
-            new Claim(ClaimTypes.Role, role.ToString())
+            new Claim(JwtRegisteredClaimNames.NameId, userId.ToString()),
+            new Claim(ClaimTypes.Role, role.ToString()),
+            new Claim("UserId", userId.ToString())
         };
 
         var token = new JwtSecurityToken(

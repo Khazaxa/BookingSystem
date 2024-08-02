@@ -3,5 +3,6 @@ namespace Domain.Users.Enums;
 public enum UserErrorCode
 {
     UserNotFound = 1,
-    EmailInUse = 2
+    EmailInUse = 2,
+    DeskAlreadyBooked = 3
 }

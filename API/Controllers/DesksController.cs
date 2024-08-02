@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace API.Controllers;
 
 [ApiController]
-public class DesksController(IMediator _mediator) : ControllerBase
+public class DesksController(IMediator _mediator, ILogger<DesksController> logger) : BaseController(logger)
 {
     [HttpPost]
     [Route("desk")]
@@ -25,8 +25,11 @@ public class DesksController(IMediator _mediator) : ControllerBase
     
     [HttpPut]
     [Route("desk/{id}/book")]
-    public Task<Unit> BookDesk(int id, int days, CancellationToken cancellationToken)
-        => _mediator.Send(new DeskBookCommand(id, days), cancellationToken);
+    public Task<Unit> BookDesk(int id, DateTime bookDate, int days, CancellationToken cancellationToken)
+    {
+        var userId = GetUserId();
+        return _mediator.Send(new DeskBookCommand(id, bookDate, days, userId), cancellationToken);
+    }
     
     [HttpPut]
     [Route("desk/{id}/unbook")]

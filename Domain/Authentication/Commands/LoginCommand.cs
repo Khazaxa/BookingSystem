@@ -24,7 +24,7 @@ internal class LoginCommandHandler(
 		if (!hash.SequenceEqual(user.PasswordHash))
 			throw new DomainException("User or password is incorrect", (int)AuthenticationErrorCode.UserOrPasswordIncorrect);
 
-		var token = _authService.GenerateToken(user.UserName, user.Role);
+		var token = _authService.GenerateToken(user.UserName, user.Role, user.Id);
 
 		return new LoginResponseDto(
 			user.Id,

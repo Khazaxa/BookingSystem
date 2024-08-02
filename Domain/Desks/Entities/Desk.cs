@@ -34,12 +34,13 @@ internal class Desk
         IsAvailable = !IsAvailable;
     }
     
-    public void Book(DateTime bookedAt, DateTime bookedUntil)
+    public void Book(DateTime bookedAt, DateTime bookedUntil, int userId)
     {
         IsBooked = true;
         IsAvailable = false;
         BookedAt = bookedAt;
         BookedUntil = bookedUntil;
+        UserId = userId;
     }
     
     public void Unbook()
