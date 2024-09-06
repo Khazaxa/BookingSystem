@@ -24,9 +24,9 @@ public class ExceptionMiddleware(RequestDelegate _next)
 
         var response = new
         {
-            StatusCode = context.Response.StatusCode,
-            Message = exception.Message,
-            ErrorCode = exception.ErrorCode
+            context.Response.StatusCode,
+            exception.Message,
+            exception.ErrorCode
         };
 
         var jsonResponse = JsonSerializer.Serialize(response);

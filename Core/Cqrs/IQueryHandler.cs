@@ -2,4 +2,4 @@ using MediatR;
 
 namespace Core.Cqrs;
 
-public interface IQueryHandler<T, E> : IRequestHandler<T, E> where T : IQuery<E> { }
+public interface IQueryHandler<T, TE> : IRequestHandler<T, TE> where T : IQuery<TE> { }

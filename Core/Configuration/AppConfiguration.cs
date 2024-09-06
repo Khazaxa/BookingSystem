@@ -3,12 +3,9 @@ using Microsoft.Extensions.Configuration;
 
 namespace Core.Configuration;
 
-public class AppConfiguration : IAppConfiguration
+public class AppConfiguration(IConfiguration configuration) : IAppConfiguration
 {
-    public ReservationsConfig Reservations { get; }
-
-    public AppConfiguration(IConfiguration configuration)
-    {
-        Reservations = configuration.GetSection("App:Reservations").Get<ReservationsConfig>();
-    }
+    public ReservationsConfig? Reservations { get; } = configuration
+        .GetSection("App:Reservations")
+        .Get<ReservationsConfig>();
 }

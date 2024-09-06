@@ -1,11 +1,6 @@
 namespace Core.Exceptions;
 
-public class DomainException : Exception
+public class DomainException(string message, int errorCode) : Exception(message)
 {
-    public DomainException(string message, int errorCode): base(message)
-    {
-        ErrorCode = errorCode;
-    }
-
-    public int ErrorCode { get; }
+    public int ErrorCode { get; } = errorCode;
 }

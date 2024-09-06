@@ -2,4 +2,4 @@ using MediatR;
 
 namespace Core.Cqrs;
 
-public interface ICommandHandler<T, E> : IRequestHandler<T, E> where T : ICommand<E> { }
+public interface ICommandHandler<T, TE> : IRequestHandler<T, TE> where T : ICommand<TE> { }
