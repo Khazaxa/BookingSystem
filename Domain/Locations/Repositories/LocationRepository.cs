@@ -30,7 +30,7 @@ internal class LocationRepository(BookingSystemDbContext _dbContext) : ILocation
 
     public async Task<bool> IsLocationContainsDeskAsync(int id, CancellationToken cancellationToken)
         => await _dbContext.Locations
-            .AnyAsync(l => l.Id == id && l.Desks.Any(), cancellationToken);
+            .AnyAsync(l => l.Id == id && l.Desks != null && l.Desks.Any(), cancellationToken);
     
     public IQueryable<Location> Query()
         => _dbContext.Locations.AsQueryable();

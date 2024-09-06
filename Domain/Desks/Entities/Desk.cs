@@ -18,17 +18,17 @@ internal class Desk
     }
     
     
-    public int Id { get; private set; }
+    public int Id { get; private init; }
     [MaxLength(CodeLength)]
-    public string Code { get; private set; }
+    public string Code { get; private init; }
     public bool IsAvailable { get; private set; }
     public bool IsBooked { get; private set; }
     public DateTime? BookedAt { get; private set; }
     public DateTime? BookedUntil { get; private set; }
-    public int LocationId { get; private set; }
-    public Location Location { get; private set; }
+    public int LocationId { get; private init; }
+    public Location? Location { get; private init; }
     public int? UserId { get; private set; }
-    public User? User { get; private set; }
+    public User? User { get; private init; }
     
     public void ChangeStatus()
     {

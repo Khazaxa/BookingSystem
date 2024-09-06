@@ -21,11 +21,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Desks\Commands\" />
-      <Folder Include="Locations\Queries\" />
-    </ItemGroup>
-
-    <ItemGroup>
       <ProjectReference Include="..\Domain\Domain.csproj" />
     </ItemGroup>
 

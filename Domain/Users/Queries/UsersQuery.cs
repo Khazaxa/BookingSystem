@@ -4,7 +4,7 @@ using Domain.Users.Repositories;
 
 namespace Domain.Users.Queries;
 
-public record UsersQuery() : IQuery<IEnumerable<UserDto>>;
+public record UsersQuery : IQuery<IEnumerable<UserDto>>;
 
 internal class UsersQueryHandler(IUserRepository _userRepository) : IQueryHandler<UsersQuery, IEnumerable<UserDto>>
 {

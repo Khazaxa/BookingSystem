@@ -2,19 +2,10 @@ using Domain.Users.Enums;
 
 namespace Domain.Users.Dto;
 
-public class UserDto
+public class UserDto(int id, string name, string email, UserRole? role)
 {
-    public UserDto(int id, string name, string email, UserRole? role)
-    {
-        Id = id;
-        Name = name;
-        Email = email;
-        Role = role;
-    }
-    
-    
-    public int Id { get; }
-    public string Name { get; }
-    public string Email { get; }
-    public UserRole? Role { get; }
+    public int Id { get; } = id;
+    public string Name { get; } = name;
+    public string Email { get; } = email;
+    public UserRole? Role { get; } = role;
 }

@@ -22,16 +22,16 @@ internal class User
     }
     
     
-    public int Id { get; private set; }
+    public int Id { get; private init; }
     [MaxLength(NameMaxLength)]
-    public string UserName { get; private set; }
+    public string UserName { get; private init; }
     [MaxLength(EmailMaxLength)]
-    public string Email { get; private set; }
-    public byte[] PasswordHash { get; private set; } = null!;
-    public byte[] PasswordSalt { get; private set; } = null!;
-    public UserRole Role { get; private set; }
-    public int? DeskId { get; private set; }
-    public Desk? Desk { get; private set; }
+    public string Email { get; private init; }
+    public byte[] PasswordHash { get; private init; }
+    public byte[] PasswordSalt { get; private init; }
+    public UserRole Role { get; private init; }
+    public int? DeskId { get; private init; }
+    public Desk? Desk { get; private init; }
     
 
     public static void OnModelCreating(ModelBuilder builder)

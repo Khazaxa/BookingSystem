@@ -18,7 +18,7 @@ internal class LocationGetDetailsQueryHandler(
     public async Task<LocationDto?> Handle(LocationGetDetailsQuery request, CancellationToken cancellationToken)
     {
         var location = await _locationRepository.Query()
-                           .Include(l => l.Desks)
+                           .Include(l => l.Desks)!
                            .ThenInclude(d => d.User)
                            .FirstOrDefaultAsync(l => l.Id == request.Id, cancellationToken)
                        ?? throw new DomainException("Location not found", (int)LocationErrorCode.NotFound);

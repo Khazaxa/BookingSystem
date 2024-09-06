@@ -12,9 +12,9 @@ internal class LocationService(
 {
     public async Task ValidateIfLocationNameExistsAsync(string name, CancellationToken cancellationToken)
     {
-        var location = await _locationRepository.FindByNameAsync(name, cancellationToken) 
-                       ?? throw new DomainException("Location with provided name already exists", 
-                           (int)LocationErrorCode.NameInUse);
+        _ = await _locationRepository.FindByNameAsync(name, cancellationToken) 
+            ?? throw new DomainException("Location with provided name already exists", 
+                (int)LocationErrorCode.NameInUse);
     }
     
     public async Task CreateInitialLocationAsync(string name, CancellationToken cancellationToken)

@@ -21,21 +21,25 @@ internal class DeskBookCommandHandler(
     public async Task<Unit> Handle(DeskBookCommand command, CancellationToken cancellationToken)
     {
         DateTime bookDate = command.BookDate;
-        var maxDays = _configuration.Reservations.MaxReservationDays;
-        var blockChangeTime = _configuration.Reservations.BlockChangeHours;
+        if (_configuration.Reservations != null)
+        {
+            var maxDays = _configuration.Reservations.MaxReservationDays;
+            var blockChangeTime = _configuration.Reservations.BlockChangeHours;
         
-        var existingBooking = await _dbContext.Desks
-            .Where(d => d.UserId == command.UserId && d.IsBooked && d.BookedUntil > DateTime.UtcNow)
-            .FirstOrDefaultAsync(cancellationToken);
+            var existingBooking = await _dbContext.Desks
+                .Where(d => d.UserId == command.UserId && d.IsBooked && d.BookedUntil > DateTime.UtcNow)
+                .FirstOrDefaultAsync(cancellationToken);
         
-        var desk = await _deskRepository.FindByIdAsync(command.Id, cancellationToken)
-                   ?? throw new DomainException("Desk not found", (int)DeskErrorCode.NotFound);
+            var desk = await _deskRepository.FindByIdAsync(command.Id, cancellationToken)
+                       ?? throw new DomainException("Desk not found", (int)DeskErrorCode.NotFound);
         
-        ValidateBook(desk, command, maxDays, blockChangeTime, existingBooking);
+            ValidateBook(desk, command, maxDays, blockChangeTime, existingBooking);
         
-        desk.Book(bookDate, bookDate.AddDays(command.Days), command.UserId);
+            desk.Book(bookDate, bookDate.AddDays(command.Days), command.UserId);
         
-        _dbContext.Desks.Update(desk);
+            _dbContext.Desks.Update(desk);
+        }
+
         await _dbContext.SaveChangesAsync(cancellationToken);
         
         return Unit.Value;

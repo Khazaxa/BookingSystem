@@ -16,10 +16,10 @@ internal class Location
     }
     
     
-    public int Id { get; private set; }
+    public int Id { get; private init; }
     [MaxLength(NameMaxLength)]
-    public string Name { get; private set; } = null!;
-    public List<Desk>? Desks { get; private set; } = new();
+    public string Name { get; private init; }
+    public List<Desk>? Desks { get; private init; } = new();
     
     public static void OnModelCreating(ModelBuilder builder)
     {

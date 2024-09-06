@@ -33,7 +33,8 @@ public class LocationCreateCommandHandlerTests
         var action = new Func<Task>(() => handler.Handle(command, CancellationToken.None));
 
         // Assert
-        await action.Should().ThrowAsync<DomainException>().Where(ex => ex.ErrorCode == (int)LocationErrorCode.NameInUse);
+        await action.Should().ThrowAsync<DomainException>().Where(
+            ex => ex.ErrorCode == (int)LocationErrorCode.NameInUse);
     }
     
     [Test]

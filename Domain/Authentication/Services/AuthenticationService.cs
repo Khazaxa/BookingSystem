@@ -2,6 +2,8 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
+using Core.Exceptions;
+using Domain.Authentication.Enums;
 using Domain.Users.Enums;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
@@ -14,9 +16,7 @@ public class AuthenticationService(IConfiguration _configuration) : IAuthenticat
     {
         var jwtKey = _configuration["App:Jwt:Key"];
         if (string.IsNullOrEmpty(jwtKey))
-        {
             throw new ArgumentNullException(nameof(jwtKey), "JWT Key is not configured.");
-        }
 
         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey));
         var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
@@ -33,7 +33,9 @@ public class AuthenticationService(IConfiguration _configuration) : IAuthenticat
             issuer: _configuration["App:Jwt:Issuer"],
             audience: _configuration["App:Jwt:Audience"],
             claims: claims,
-            expires: DateTime.Now.AddMinutes(double.Parse(_configuration["App:Jwt:ExpireMinutes"])),
+            expires: DateTime.Now.AddMinutes(double.Parse(_configuration["App:Jwt:ExpireMinutes"] 
+                                                          ?? throw new DomainException("JwtExpireMinutesNotConfigured", 
+                                                              (int)AuthenticationErrorCode.JwtExpireMinutesNotConfigured))),
             signingCredentials: creds);
 
         return new JwtSecurityTokenHandler().WriteToken(token);

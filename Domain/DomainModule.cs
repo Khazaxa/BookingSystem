@@ -12,7 +12,7 @@ namespace Domain;
 
 public class DomainModule(IConfigurationRoot _configuration) : Module
 {
-    public const string ConnectionStringName = nameof(BookingSystemDbContext);
+    private const string ConnectionStringName = nameof(BookingSystemDbContext);
 
     protected override void Load(ContainerBuilder builder)
     {
@@ -39,11 +39,12 @@ public class DomainModule(IConfigurationRoot _configuration) : Module
     private void RegisterDatabaseProviders(ContainerBuilder builder)
     {
         builder
-            .Register(x =>
+            .Register(_ =>
             {
                 var optionsBuilder = new DbContextOptionsBuilder<BookingSystemDbContext>();
                 var connectionString = _configuration.GetConnectionString(ConnectionStringName);
-                optionsBuilder.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
+                if (connectionString != null)
+                    optionsBuilder.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
                 return new BookingSystemDbContext(optionsBuilder.Options);
             })
             .As<DbContext>()

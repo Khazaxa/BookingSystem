@@ -11,9 +11,9 @@ internal class BookingSystemDbContext : DbContext
     {
     }
 
-    public DbSet<User> Users { get; set; }
-    public DbSet<Location> Locations { get; set; }
-    public DbSet<Desk> Desks { get; set; }
+    public DbSet<User> Users { get; }
+    public DbSet<Location> Locations { get; }
+    public DbSet<Desk> Desks { get; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

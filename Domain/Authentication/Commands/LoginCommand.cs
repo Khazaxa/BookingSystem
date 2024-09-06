@@ -17,11 +17,13 @@ internal class LoginCommandHandler(
 	public async Task<LoginResponseDto> Handle(LoginCommand request, CancellationToken cancellationToken)
 	{
 		var user = (await _userRepository.FindByEmailAsync(request.Input.Email, cancellationToken))
-		           ?? throw new DomainException("User or password is incorrect", (int)AuthenticationErrorCode.UserOrPasswordIncorrect);
+		           ?? throw new DomainException("User or password is incorrect",
+			           (int)AuthenticationErrorCode.UserOrPasswordIncorrect);
 
 		var hash = _authService.ComputePasswordHash(request.Input.Password, user.PasswordSalt);
 		if (!hash.SequenceEqual(user.PasswordHash))
-			throw new DomainException("User or password is incorrect", (int)AuthenticationErrorCode.UserOrPasswordIncorrect);
+			throw new DomainException("User or password is incorrect",
+				(int)AuthenticationErrorCode.UserOrPasswordIncorrect);
 
 		var token = _authService.GenerateToken(user.UserName, user.Role, user.Id);
 
