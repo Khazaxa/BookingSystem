@@ -5,4 +5,5 @@ namespace Core.Configuration;
 public interface IAppConfiguration
 {
     ReservationsConfig? Reservations { get; }
+    AzureConfig? Azure { get; }
 }
