@@ -32,7 +32,8 @@ internal class FileUploadCommandHandler(
             ContentType = command.File.ContentType
         };
             
-        await blobClient.UploadAsync(command.File.OpenReadStream(), blobHttpHeaders, cancellationToken: cancellationToken);
+        await blobClient.UploadAsync(command.File.OpenReadStream(),
+            blobHttpHeaders, cancellationToken: cancellationToken);
         
         return new OkResult();
     }
