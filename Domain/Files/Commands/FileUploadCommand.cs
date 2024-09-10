@@ -1,4 +1,5 @@
 using Azure.Storage.Blobs;
+using Azure.Storage.Blobs.Models;
 using Core.Configuration;
 using Core.Cqrs;
 using Core.Exceptions;
@@ -25,8 +26,13 @@ internal class FileUploadCommandHandler(
         var blobClient = containerClient.GetBlobClient(command.File.FileName);
         if(await blobClient.ExistsAsync(cancellationToken))
             throw new DomainException("File already exists", (int)FileErrorCode.FileAlreadyExists);
+        
+        var blobHttpHeaders = new BlobHttpHeaders
+        {
+            ContentType = command.File.ContentType
+        };
             
-        await blobClient.UploadAsync(command.File.OpenReadStream(), cancellationToken);
+        await blobClient.UploadAsync(command.File.OpenReadStream(), blobHttpHeaders, cancellationToken: cancellationToken);
         
         return new OkResult();
     }
