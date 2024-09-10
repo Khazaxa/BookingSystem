@@ -1,4 +1,5 @@
 using Domain.Files.Commands;
+using Domain.Files.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -12,4 +13,9 @@ public class FilesController(IMediator _mediator) : ControllerBase
     [AllowAnonymous]
     public async Task<IActionResult> UploadFile(IFormFile file, CancellationToken cancellationToken)
         => await _mediator.Send(new FileUploadCommand(file), cancellationToken);
+    
+    [HttpGet("download")]
+    [AllowAnonymous]
+    public async Task<IActionResult> DownloadFile(string fileName, CancellationToken cancellationToken)
+        => await _mediator.Send(new FileDownloadQuery(fileName), cancellationToken);
 }
