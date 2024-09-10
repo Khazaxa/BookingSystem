@@ -13,7 +13,7 @@ using Microsoft.OpenApi.Models;
 
 namespace API;
 
-public class Program
+public static class Program
 {
     public static void Main(string[] args)
     {
@@ -46,7 +46,7 @@ public class Program
                             Id = "Bearer"
                         }
                     },
-                    new string[] { }
+                    []
                 }
             });
         });
