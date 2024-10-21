@@ -26,6 +26,7 @@ internal class DeskBookCommandHandler(
         
         var existingBooking = await _dbContext.Desks
             .Where(d => d.UserId == command.UserId && d.IsBooked && d.BookedUntil > DateTime.UtcNow)
+            .OrderDescending()
             .FirstOrDefaultAsync(cancellationToken);
         
         var desk = await _deskRepository.FindByIdAsync(command.Id, cancellationToken)
